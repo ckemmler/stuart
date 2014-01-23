@@ -1,6 +1,6 @@
 # Stuart
 
-A [http://dropwizard.codahale.com/](dropwizard) utility webapp to rss-ify your twitter roster. It uses hibernate for persistence, [https://code.google.com/p/boilerpipe/](boilerpipe) to parse link targets and extract their title and contents, and [https://code.google.com/p/oauth-signpost/](signpost) (oauth) to access your twitter rooster.
+A [dropwizard](http://dropwizard.codahale.com/) utility webapp to rss-ify your twitter roster. It uses hibernate for persistence, [boilerpipe](https://code.google.com/p/boilerpipe/) to parse link targets and extract their title and contents, and [signpost](https://code.google.com/p/oauth-signpost/) (oauth) to access your twitter rooster.
 
 It will let you create an rss of all the article (links) that are posted by your twitter friends (/stuart/home_timeline). It will also let you get an rss of all the articles posted by a specific twitter user (/stuart/user_timeline).
 
