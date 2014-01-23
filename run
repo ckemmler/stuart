@@ -1,0 +1,4 @@
+#!/bin/sh
+export JAVA_OPTS="-XX:MaxPermSize=256m -Xms256m -Xmx2048m -Djavax.servlet.request.encoding=UTF-8 -Dfile.encoding=UTF-8 $JAVA_OPTS"
+
+java $JAVA_OPTS -Ddw.http.port=9292 -jar target/stuart.jar server stuart.yml
