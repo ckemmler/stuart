@@ -20,4 +20,6 @@ The project is built with maven, so just do `maven install` to create a runnable
 
 Also, you need to setup a mysql database and run the DDL inside `db/init.sql` before running the app. 
 
+Here's a screenshot taken from my favorite RSS aggregator ([fever](http://feedafever.com/)):
+
 ![screenshot] (https://raw2.github.com/ckemmler/stuart/master/wiki/images/twitter_roster.png "screenshot")
