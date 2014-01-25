@@ -19,3 +19,5 @@ Lastly, the /stuart/scoopit endpoint changes the rss provided by scoopit to repl
 The project is built with maven, so just do `maven install` to create a runnable jar. There is an example run bash script and yml configuration file included in the project.
 
 Also, you need to setup a mysql database and run the DDL inside `db/init.sql` before running the app. 
+
+![screenshot] (https://raw2.github.com/ckemmler/stuart/master/wiki/images/twitter_roster.png "screenshot")
