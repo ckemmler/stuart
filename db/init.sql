@@ -13,7 +13,7 @@ CREATE TABLE `HtmlDocument` (
   `URL` longtext NOT NULL,
   `URL_hash` varchar(255) NOT NULL,
   `title` longtext,
-  `description` longtext,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `article_hash` varchar(255) NULL,
   PRIMARY KEY (`id`),
   KEY `URL` (`URL_hash`),

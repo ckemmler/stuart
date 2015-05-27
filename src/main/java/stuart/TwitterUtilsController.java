@@ -283,9 +283,13 @@ public class TwitterUtilsController {
             futures.add(future);
         }
         for (Future<List<Element>> future : futures) {
-            final List<Element> feedItems = future.get();
-            for (Element feedItem : feedItems) {
-                channelElement.appendChild(feedItem);
+            try {
+                final List<Element> feedItems = future.get();
+                for (Element feedItem : feedItems) {
+                    channelElement.appendChild(feedItem);
+                }
+            } catch (Throwable t) {
+                continue;
             }
         }
         executorService.shutdown();
