@@ -153,6 +153,7 @@ public class TwitterUtilsController {
     @GET
     @Timed
     @Path("/home_timeline")
+    @Produces("text/xml")
     public String getHomeTimelineRssFeed() {
         try {
             OAuthConsumer consumer = new DefaultOAuthConsumer(
@@ -195,6 +196,7 @@ public class TwitterUtilsController {
     @GET
     @Timed
     @Path("/user_timeline")
+    @Produces("text/xml")
     public String getUserTimelineRssFeed(@QueryParam("twitterName") String twitterName) throws IOException, SAXException, XPathExpressionException, ParserConfigurationException, TransformerException, OAuthCommunicationException, OAuthExpectationFailedException, OAuthMessageSignerException {
         try {
             OAuthConsumer consumer = new DefaultOAuthConsumer(
@@ -205,7 +207,7 @@ public class TwitterUtilsController {
 
             // create a request that requires authentication
             String urlString = String.format("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=%s", twitterName);
-            urlString += "&count=200";
+            urlString += "&count=2";
             URL url = new URL(urlString);
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
 
@@ -334,7 +336,7 @@ public class TwitterUtilsController {
             } else {
                 String htmlContents = "";
                 try {
-                    htmlContents = URLConnectionReader.getText(url);
+                    htmlContents = URLConnectionReader.getText(longUrl);
                 } catch (Throwable t) {
                     System.out.println("not taking into account documents whose article we're not able to extract");
                 }
@@ -351,7 +353,7 @@ public class TwitterUtilsController {
                 if (source != null) {
                     title = getTitle(source);
                     description = getMetaValue(source, "description");
-                    if (description == null) description = title;
+                    if (description == null && title!=null) description = title;
                 }
                 addHtmlDocument(url, title, description, articleHash);
                 item.appendChild(createTextElement(doc, "title", title));

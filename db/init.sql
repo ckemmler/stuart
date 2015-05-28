@@ -2,10 +2,9 @@
 CREATE TABLE `ShortUrl` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `shortUrl` varchar(255) NOT NULL,
-  `longUrl` varchar(255) NOT NULL,
+  `longUrl` text NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `shortUrl` (`shortUrl`),
-  KEY `longUrl` (`longUrl`)
+  KEY `shortUrl` (`shortUrl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `HtmlDocument` (
