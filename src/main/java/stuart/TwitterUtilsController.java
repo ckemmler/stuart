@@ -207,7 +207,7 @@ public class TwitterUtilsController {
 
             // create a request that requires authentication
             String urlString = String.format("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=%s", twitterName);
-            urlString += "&count=2";
+            urlString += "&count=200";
             URL url = new URL(urlString);
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
 
