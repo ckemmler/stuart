@@ -53,6 +53,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.regex.Pattern;
 
 import static stuart.Utils.fetch;
 import static stuart.Utils.hash;
@@ -351,9 +352,14 @@ public class TwitterUtilsController {
                 final Source source = getSource(new StringReader(htmlContents));
                 String title = longUrl, description = longUrl;
                 if (source != null) {
-                    title = getTitle(source);
-                    description = getMetaValue(source, "description");
-                    if (description == null && title!=null) description = title;
+                    String extractedTitle = getTitle(source);
+                    String extractedDescription = getMetaValue(source, "description");
+                    if (extractedTitle!=null) {
+                        title = extractedTitle;
+                        description = extractedTitle;
+                    }
+                    if (extractedDescription!=null)
+                        description = extractedDescription;
                 }
                 addHtmlDocument(url, title, description, articleHash);
                 item.appendChild(createTextElement(doc, "title", title));
@@ -411,6 +417,10 @@ public class TwitterUtilsController {
 
     private static String getTitle(Source source) {
         net.htmlparser.jericho.Element titleElement=source.getFirstElement(HTMLElementName.TITLE);
+        if (titleElement==null)
+            titleElement = source.getFirstElement("class", Pattern.compile("(.)*title(.)*"));
+        if (titleElement==null)
+            titleElement = source.getFirstElement(HTMLElementName.H1);
         if (titleElement==null) return null;
         // TITLE element never contains other tags so just decode it collapsing whitespace:
         return CharacterReference.decodeCollapseWhiteSpace(titleElement.getContent());
