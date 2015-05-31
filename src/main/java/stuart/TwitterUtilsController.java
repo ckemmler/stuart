@@ -262,7 +262,7 @@ public class TwitterUtilsController {
 
 
     private void addTweetUrls(final Document doc, JSONArray tweets, final String twitterName, Element channelElement, boolean setImage) throws IOException, ExecutionException, InterruptedException {
-        final ExecutorService executorService = Executors.newFixedThreadPool(10);
+        final ExecutorService executorService = Executors.newFixedThreadPool(200);
         List<Future<List<Element>>> futures = new ArrayList<Future<List<Element>>>();
         boolean imageIsSet = false;
         for (int i=0; i<tweets.size(); i++) {
