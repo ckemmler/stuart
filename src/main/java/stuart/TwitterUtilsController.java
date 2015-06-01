@@ -75,6 +75,8 @@ public class TwitterUtilsController {
     DateTimeFormatter twitterDateFormat =
             DateTimeFormat.forPattern("EEE MMM dd HH:mm:ss Z yyyy").withLocale(Locale.ENGLISH);
 
+    ExecutorService executorService = Executors.newCachedThreadPool();
+
     public TwitterUtilsController(StuartUtilsConfiguration configuration, SessionFactory sessionFactory) {
         this.configuration = configuration;
         this.sessionFactory = sessionFactory;
@@ -262,7 +264,6 @@ public class TwitterUtilsController {
 
 
     private void addTweetUrls(final Document doc, JSONArray tweets, final String twitterName, Element channelElement, boolean setImage) throws IOException, ExecutionException, InterruptedException {
-        final ExecutorService executorService = Executors.newFixedThreadPool(200);
         List<Future<List<Element>>> futures = new ArrayList<Future<List<Element>>>();
         boolean imageIsSet = false;
         for (int i=0; i<tweets.size(); i++) {
@@ -271,11 +272,12 @@ public class TwitterUtilsController {
                 setImage(doc, channelElement, tweet);
                 imageIsSet = true;
             }
+            final int count = i+1;
             Callable<List<Element>> callable = new Callable<List<Element>>() {
 
                 @Override
                 public List<Element> call() throws Exception {
-                    System.out.println("spawning a thread");
+                    System.out.println("executing in parallel, extracting tweet " + count);
                     List<String> urls = getUrls(tweet);
                     List<Element> feedItems = createRssFeedItems(doc, tweet, twitterName, urls);
                     return feedItems;
@@ -294,12 +296,6 @@ public class TwitterUtilsController {
             } catch (Throwable t) {
                 continue;
             }
-        }
-        executorService.shutdown();
-        try {
-            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
